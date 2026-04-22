@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  /* Premium Desi Palette */
+  --background: #fffcf7;
+  --foreground: #1e293b;
+  
+  --saffron: #FF9933;
+  --indigo: #1E3A8A;
+  --india-green: #138808;
+  --terracotta: #B55D4C;
+  --marigold: #FFB347;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-saffron: var(--saffron);
+  --color-indigo: var(--indigo);
+  --color-green-india: var(--india-green);
+  --color-terracotta: var(--terracotta);
+  --color-marigold: var(--marigold);
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-ink: ink-spread 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes ink-spread {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Cultural Subtle Pattern */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(var(--marigold) 0.5px, transparent 0.5px),
+    radial-gradient(var(--marigold) 0.5px, #fffcf7 0.5px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  opacity: 0.03;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+.desi-gradient {
+  background: linear-gradient(135deg, var(--saffron) 0%, #ff8c00 100%);
+}
+
+.indigo-gradient {
+  background: linear-gradient(135deg, var(--indigo) 0%, #0c1a40 100%);
+}
