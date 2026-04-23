@@ -1,81 +1,146 @@
 @import "tailwindcss";
 
+/* ===== PREMIUM DESI DESIGN SYSTEM ===== */
 :root {
-  /* Premium Desi Palette */
-  --background: #fffcf7;
-  --foreground: #1e293b;
-  
   --saffron: #FF9933;
-  --indigo: #1E3A8A;
+  --saffron-deep: #E8860D;
+  --indigo-deep: #1A237E;
+  --indigo: #283593;
   --india-green: #138808;
-  --terracotta: #B55D4C;
-  --marigold: #FFB347;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.3);
+  --chakra-blue: #000080;
+  --terracotta: #C75B39;
+  --marigold: #F5A623;
+  --cream: #FFF8F0;
+  --ivory: #FFFFF0;
+  --henna: #8B4513;
+  --peacock: #0D7377;
+  --lotus-pink: #E91E63;
+  --gold: #D4A843;
+  --bg: #FEFBF6;
+  --fg: #1A1A2E;
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.35);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
   --color-saffron: var(--saffron);
+  --color-saffron-deep: var(--saffron-deep);
+  --color-indigo-deep: var(--indigo-deep);
   --color-indigo: var(--indigo);
-  --color-green-india: var(--india-green);
+  --color-india-green: var(--india-green);
+  --color-chakra-blue: var(--chakra-blue);
   --color-terracotta: var(--terracotta);
   --color-marigold: var(--marigold);
-  
+  --color-cream: var(--cream);
+  --color-henna: var(--henna);
+  --color-peacock: var(--peacock);
+  --color-lotus-pink: var(--lotus-pink);
+  --color-gold: var(--gold);
   --animate-float: float 6s ease-in-out infinite;
-  --animate-ink: ink-spread 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+  --animate-spin-slow: spin 20s linear infinite;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
-@keyframes ink-spread {
-  0% { transform: scale(0); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--saffron); border-radius: 4px; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans, system-ui, sans-serif);
   min-height: 100vh;
-  position: relative;
   overflow-x: hidden;
 }
 
-/* Cultural Subtle Pattern */
+/* ===== Indian Cultural Background Pattern (Mandala Dots) ===== */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(var(--marigold) 0.5px, transparent 0.5px),
-    radial-gradient(var(--marigold) 0.5px, #fffcf7 0.5px);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
-  opacity: 0.03;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, var(--marigold) 0.8px, transparent 0.8px),
+    radial-gradient(circle, var(--saffron) 0.4px, transparent 0.4px);
+  background-size: 48px 48px, 24px 24px;
+  background-position: 0 0, 12px 12px;
+  opacity: 0.04;
   z-index: -1;
   pointer-events: none;
 }
 
+/* ===== Glassmorphism ===== */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  box-shadow: 0 8px 32px rgba(26, 35, 126, 0.08);
 }
 
 .desi-gradient {
-  background: linear-gradient(135deg, var(--saffron) 0%, #ff8c00 100%);
+  background: linear-gradient(135deg, var(--saffron) 0%, var(--saffron-deep) 100%);
+}
+.indigo-gradient {
+  background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-deep) 100%);
+}
+.tricolor-border {
+  border-image: linear-gradient(to right, var(--saffron), white, var(--india-green)) 1;
 }
 
-.indigo-gradient {
-  background: linear-gradient(135deg, var(--indigo) 0%, #0c1a40 100%);
+/* ===== Ashoka Chakra Spinner ===== */
+.chakra-spin {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--chakra-blue);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1.5s linear infinite;
 }
+
+/* ===== Section Divider (Paisley Wave SVG) ===== */
+.paisley-divider {
+  width: 100%;
+  height: 60px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23FF9933' fill-opacity='0.08' d='M0,30 Q360,0 720,30 T1440,30 V60 H0Z'/%3E%3C/svg%3E") repeat-x;
+  background-size: 1440px 60px;
+}
+
+/* ===== Rangoli Border ===== */
+.rangoli-card {
+  position: relative;
+  overflow: hidden;
+}
+.rangoli-card::before {
+  content: "";
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  background: linear-gradient(45deg, var(--saffron), var(--marigold), var(--india-green), var(--peacock), var(--saffron));
+  background-size: 400% 400%;
+  animation: rangoli-shift 8s ease infinite;
+  border-radius: inherit;
+  z-index: -1;
+}
+@keyframes rangoli-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== Markdown formatting for chat ===== */
+.chat-md p { margin-bottom: 0.5rem; }
+.chat-md ul { list-style: disc; padding-left: 1.2rem; margin-bottom: 0.5rem; }
+.chat-md ol { list-style: decimal; padding-left: 1.2rem; margin-bottom: 0.5rem; }
+.chat-md strong { font-weight: 700; }
+.chat-md h1, .chat-md h2, .chat-md h3 { font-weight: 700; margin-top: 0.5rem; }

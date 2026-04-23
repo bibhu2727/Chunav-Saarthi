@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🗳️ Chunav Saarthi - Your AI Election Guide
 
-## Getting Started
+**Chunav Saarthi** is a premium, AI-powered election assistant designed to help Indian citizens navigate the democratic process with ease and confidence. Built for the PromptWars Challenge 2.
 
-First, run the development server:
+## 🚀 Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **🤖 AI Saarthi Assistant**: Real-time conversation in 12+ Indian languages to answer any election-related query.
+- **📟 Hero EVM Simulator**: A 101% real-feel EVM simulator with mechanical sound effects and VVPAT verification logic.
+- **📅 Interactive Timeline**: Real-time 2024 Lok Sabha and 2026 State Assembly schedules.
+- **🆔 Voter Journey**: Step-by-step interactive guide for registration and document requirements.
+- **🎨 Premium Desi UI**: A stunning Glassmorphism design system inspired by Indian cultural motifs.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **AI Engine**: OpenRouter (OpenAI-compatible) via Gemini Pro
+- **Icons**: Lucide React
+- **Typography**: Geist Sans & Geist Mono
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 Deployment Guide
 
-## Learn More
+### Pre-requisites
+1. Obtain an **OpenRouter API Key**.
+2. Have a **Vercel account** connected to your GitHub.
 
-To learn more about Next.js, take a look at the following resources:
+### Steps to Deploy
+1. **Push to GitHub**: Initialize a git repo and push the code.
+2. **Import to Vercel**: Select the repository in Vercel.
+3. **Configure Env Vars**: Add the following Environment Variable in Vercel Settings:
+   - `OPENROUTER_API_KEY`: [Your Key Here]
+4. **Deploy**: Click Deploy and wait for the "Congratulations" screen!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📜 Credits
+- Created as part of a high-fidelity coding challenge.
+- Data sourced from the **Election Commission of India**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Built with ❤️ for Indian Democracy.*
