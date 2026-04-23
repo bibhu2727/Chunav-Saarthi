@@ -33,11 +33,13 @@ export async function askSaarthi(
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "HTTP-Referer": "https://chunav-saarthi.vercel.app", // Required for some free models on OpenRouter
+        "X-Title": "Chunav Saarthi"
       },
       body: JSON.stringify({
         messages: messages,
-        model: "openrouter/free" // Always routes to the best working free model securely
+        model: "google/gemini-2.0-flash-lite-preview-02-05:free" // Using a very stable specific free model
       })
     });
 
