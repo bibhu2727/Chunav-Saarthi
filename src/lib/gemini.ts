@@ -1,6 +1,16 @@
 "use server";
 
+import OpenAI from "openai";
 import { SAARTHI_SYSTEM_PROMPT } from "./data";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY || "",
+  baseURL: "https://openrouter.ai/api/v1",
+  defaultHeaders: {
+    "HTTP-Referer": "https://chunav-saarthi.vercel.app",
+    "X-Title": "Chunav Saarthi",
+  }
+});
 
 interface ChatMessage {
   role: "user" | "model";
@@ -13,49 +23,33 @@ export async function askSaarthi(
   language: string = "en"
 ): Promise<string> {
   try {
-    // Debug logs for Vercel (check Vercel Logs)
-    console.log("Starting AI request for language:", language);
     if (!process.env.OPENROUTER_API_KEY) {
-      console.error("CRITICAL: OPENROUTER_API_KEY is missing in environment variables!");
-      return "Technical Error: API Key not configured. Please check Vercel settings.";
+      console.error("OPENROUTER_API_KEY is not defined");
+      return "Config Error: API Key missing in Vercel.";
     }
 
-    const messages: any[] = [
+    // Prepare messages: Combine system prompt with user's first message or as a separate system message
+    const apiMessages: any[] = [
       { 
-        role: "user", 
-        content: `System Instructions: ${SAARTHI_SYSTEM_PROMPT}\n\nUser Question: ${userMessage}` 
-      }
+        role: "system", 
+        content: `${SAARTHI_SYSTEM_PROMPT}\n\nIMPORTANT: User preferred language is ${language}. Respond in this language.` 
+      },
+      ...history.map(m => ({
+        role: m.role === "model" ? "assistant" : "user",
+        content: m.parts[0].text
+      })),
+      { role: "user", content: userMessage }
     ];
 
-    // Note: Removed 'system' role for better compatibility with free models
-    
-    console.log("Sending request to OpenRouter...");
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "HTTP-Referer": "https://chunav-saarthi.vercel.app",
-        "X-Title": "Chunav Saarthi",
-      },
-      body: JSON.stringify({
-        messages: messages,
-        model: "google/gemini-2.0-flash-exp:free" // Using the most common stable free model
-      })
+    const completion = await openai.chat.completions.create({
+      model: "google/gemini-2.0-flash-exp:free", // One of the most reliable free models
+      messages: apiMessages,
     });
 
-    const data = await response.json();
-    console.log("OpenRouter Response received:", response.status);
-
-    if (!response.ok) {
-      console.error("OpenRouter Error Details:", data);
-      return "OpenRouter Error: " + (data.error?.message || "Unknown error");
-    }
-
-    return data.choices?.[0]?.message?.content || "Error retrieving response.";
+    return completion.choices[0]?.message?.content || "No response content.";
 
   } catch (error: any) {
-    console.error("Full Runtime Error:", error);
-    return "Maaf kijiye 🙏 Technical issue: " + error.message;
+    console.error("AI Error:", error);
+    return `AI Error: ${error.message || "Failed to get response"}`;
   }
 }
