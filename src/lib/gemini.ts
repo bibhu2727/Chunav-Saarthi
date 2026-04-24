@@ -3,15 +3,6 @@
 import OpenAI from "openai";
 import { SAARTHI_SYSTEM_PROMPT } from "./data";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENROUTER_API_KEY || "",
-  baseURL: "https://openrouter.ai/api/v1",
-  defaultHeaders: {
-    "HTTP-Referer": "https://chunav-saarthi.vercel.app",
-    "X-Title": "Chunav Saarthi",
-  }
-});
-
 interface ChatMessage {
   role: "user" | "model";
   parts: { text: string }[];
@@ -27,6 +18,15 @@ export async function askSaarthi(
       console.error("OPENROUTER_API_KEY is not defined");
       return "Config Error: API Key missing in Vercel.";
     }
+
+    const openai = new OpenAI({
+      apiKey: process.env.OPENROUTER_API_KEY,
+      baseURL: "https://openrouter.ai/api/v1",
+      defaultHeaders: {
+        "HTTP-Referer": "https://chunav-saarthi.vercel.app",
+        "X-Title": "Chunav Saarthi",
+      }
+    });
 
     // Prepare messages: Combine system prompt with user's first message or as a separate system message
     const apiMessages: any[] = [
