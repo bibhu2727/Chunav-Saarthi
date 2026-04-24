@@ -103,7 +103,7 @@ export default function ChatAssistant() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col items-end gap-3 max-w-[calc(100vw-32px)]">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -111,7 +111,7 @@ export default function ChatAssistant() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 30 }}
             transition={{ type: "spring", damping: 20 }}
-            className="w-[390px] md:w-[460px] h-[640px] rounded-[32px] overflow-hidden flex flex-col shadow-2xl border border-white/30"
+            className="w-[calc(100vw-32px)] sm:w-[390px] md:w-[460px] h-[70vh] sm:h-[640px] max-h-[80vh] rounded-[24px] sm:rounded-[32px] overflow-hidden flex flex-col shadow-2xl border border-white/30"
             style={{ background: "rgba(255,252,247,0.95)", backdropFilter: "blur(20px)" }}
           >
             {/* Header */}
@@ -208,7 +208,7 @@ export default function ChatAssistant() {
           onClick={() => setIsOpen(!isOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className={`relative w-20 h-20 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(255,153,51,0.5)] transition-all duration-300 border-4 overflow-hidden ${isOpen ? "bg-white text-indigo border-indigo/20" : "bg-white border-saffron/30 hover:shadow-[0_0_40px_rgba(255,153,51,0.8)]"}`}
+          className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(255,153,51,0.5)] transition-all duration-300 border-4 overflow-hidden ${isOpen ? "bg-white text-indigo border-indigo/20" : "bg-white border-saffron/30 hover:shadow-[0_0_40px_rgba(255,153,51,0.8)]"}`}
         >
           {isOpen ? (
             <X className="w-8 h-8 text-indigo" />
