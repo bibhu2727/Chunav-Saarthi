@@ -13,46 +13,49 @@ export async function askSaarthi(
   language: string = "en"
 ): Promise<string> {
   try {
+    // Debug logs for Vercel (check Vercel Logs)
+    console.log("Starting AI request for language:", language);
+    if (!process.env.OPENROUTER_API_KEY) {
+      console.error("CRITICAL: OPENROUTER_API_KEY is missing in environment variables!");
+      return "Technical Error: API Key not configured. Please check Vercel settings.";
+    }
+
     const messages: any[] = [
       { 
-        role: "system", 
-        content: SAARTHI_SYSTEM_PROMPT + `\n\nCRITICAL: The user has selected the language code '${language}'. You MUST respond to them in this language if it's not English.` 
+        role: "user", 
+        content: `System Instructions: ${SAARTHI_SYSTEM_PROMPT}\n\nUser Question: ${userMessage}` 
       }
     ];
 
-    for (const msg of history) {
-      messages.push({
-        role: msg.role === "model" ? "assistant" : "user",
-        content: msg.parts[0].text
-      });
-    }
-
-    messages.push({ role: "user", content: userMessage });
-
+    // Note: Removed 'system' role for better compatibility with free models
+    
+    console.log("Sending request to OpenRouter...");
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "HTTP-Referer": "https://chunav-saarthi.vercel.app", // Required for some free models on OpenRouter
-        "X-Title": "Chunav Saarthi"
+        "HTTP-Referer": "https://chunav-saarthi.vercel.app",
+        "X-Title": "Chunav Saarthi",
       },
       body: JSON.stringify({
         messages: messages,
-        model: "google/gemini-2.0-flash-lite-preview-02-05:free" // Using a very stable specific free model
+        model: "google/gemini-2.0-flash-exp:free" // Using the most common stable free model
       })
     });
 
+    const data = await response.json();
+    console.log("OpenRouter Response received:", response.status);
+
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`OpenRouter API Error: ${response.status} - ${errorText}`);
+      console.error("OpenRouter Error Details:", data);
+      return "OpenRouter Error: " + (data.error?.message || "Unknown error");
     }
 
-    const data = await response.json();
     return data.choices?.[0]?.message?.content || "Error retrieving response.";
 
-  } catch (error: unknown) {
-    console.error("OpenRouter Error:", error);
-    return "Maaf kijiye 🙏 I encountered a technical issue. Please try again or call the ECI Helpline: **1950**";
+  } catch (error: any) {
+    console.error("Full Runtime Error:", error);
+    return "Maaf kijiye 🙏 Technical issue: " + error.message;
   }
 }
