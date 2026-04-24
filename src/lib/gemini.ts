@@ -42,7 +42,7 @@ export async function askSaarthi(
     ];
 
     const completion = await openai.chat.completions.create({
-      model: "google/gemini-2.0-flash-exp:free", // One of the most reliable free models
+      model: "openrouter/free", // Using the auto-router which avoids 404s when specific models drop
       messages: apiMessages,
     });
 
